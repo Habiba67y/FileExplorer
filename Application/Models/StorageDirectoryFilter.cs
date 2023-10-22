@@ -1,6 +1,6 @@
 ﻿namespace Application.Models;
 
-public class FilterPagination
+public class StorageDirectoryFilter
 {
     public int PageToken { get; set; } = 1;
     public int PageSize { get; set; } = 10;

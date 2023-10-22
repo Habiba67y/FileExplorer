@@ -15,14 +15,14 @@ public class DirectoriesController : ControllerBase
     }
 
     [HttpGet("root/entries")]
-    public async ValueTask<IActionResult> GetRootEntries([FromQuery] FilterPagination filter, [FromServices] IWebHostEnvironment environment)
+    public async ValueTask<IActionResult> GetRootEntries([FromQuery] StorageDirectoryFilter filter, [FromServices] IWebHostEnvironment environment)
     {
         var result = await _entryService.Get(environment.WebRootPath, filter);
         return result.Any() ? Ok(result) : NoContent();
     }
 
     [HttpGet("{directoryPath}/entries")]
-    public async ValueTask<IActionResult> GetRootEntries([FromRoute] string directoryPath, [FromQuery] FilterPagination filter)
+    public async ValueTask<IActionResult> GetRootEntries([FromRoute] string directoryPath, [FromQuery] StorageDirectoryFilter filter)
     {
         var result = await _entryService.Get(directoryPath, filter);
         return result.Any() ? Ok(result) : NoContent();
