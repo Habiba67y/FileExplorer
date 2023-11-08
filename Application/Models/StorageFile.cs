@@ -1,4 +1,6 @@
-﻿namespace Application.Models;
+﻿using Application.Enums;
+
+namespace Application.Models;
 
 public class StorageFile : IStorageEntry
 {
@@ -7,5 +9,5 @@ public class StorageFile : IStorageEntry
     public string DirectoryPath { get; set; }
     public long Size { get; set; }
     public string Extension { get; set; }
-    public StorageItmeType EntryType { get; set; } = StorageItmeType.File;
+    public StorageItemType EntryType { get; set; } = StorageItemType.File;
 }

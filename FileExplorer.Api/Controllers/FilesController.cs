@@ -1,4 +1,4 @@
-﻿using Application.Models;
+﻿using Application.Filters;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,23 +8,28 @@ namespace FileExplorer.Api.Controllers;
 
 public class FilesController : ControllerBase
 {
-    private readonly IEntryService _entryService;
-    public FilesController(IEntryService entryService)
+    private readonly IWebHostEnvironment _hostEnvironment;
+    private readonly IFileProcessingService _fileProcessingService;
+    public FilesController(IWebHostEnvironment hostEnvironment, IFileProcessingService entryService)
     {
-        _entryService = entryService;
+        _hostEnvironment = hostEnvironment;
+        _fileProcessingService = entryService;
     }
 
-    [HttpGet("root/files")]
-    public async ValueTask<IActionResult> GetRootEntries([FromQuery] StorageFileFilter filter, [FromServices] IWebHostEnvironment environment)
+    [HttpGet("root/files/filter")]
+    public async ValueTask<IActionResult> GetFilterData()
     {
-        var result = await _entryService.GetFiles(environment.WebRootPath, filter);
-        return result.Any() ? Ok(result) : NoContent();
+        var result = await _fileProcessingService.GetFilterDataModelAsync(_hostEnvironment.WebRootPath);
+
+        return Ok(result);
     }
 
-    [HttpGet("{directoryPath}/files")]
-    public async ValueTask<IActionResult> GetRootEntries([FromRoute] string directoryPath, [FromQuery] StorageFileFilter filter)
+    [HttpGet("root/files/by-filter")]
+    public async ValueTask<IActionResult> GetRootEntries([FromQuery] StorageFileFilterModel filterModel)
     {
-        var result = await _entryService.GetFiles(directoryPath, filter);
-        return result.Any() ? Ok(result) : NoContent();
+        filterModel.DirectoryPath = _hostEnvironment.WebRootPath;
+        var result = await _fileProcessingService.GetByFilterAsync(filterModel);
+
+        return result.Any() ? Ok(result) : NotFound(result);
     }
 }

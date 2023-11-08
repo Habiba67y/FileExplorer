@@ -12,5 +12,5 @@ public class DriveService : IDriveService
         _broker = broker;    
     }
     public ValueTask<List<StorageDrive>> GetDrives()
-    => new ValueTask<List<StorageDrive>>(_broker.Get().ToList());
+    => new(_broker.Get().ToList());
 }

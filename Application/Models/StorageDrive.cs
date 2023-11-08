@@ -1,4 +1,6 @@
-﻿namespace Application.Models;
+﻿using Application.Enums;
+
+namespace Application.Models;
 
 public class StorageDrive 
 {
@@ -11,5 +13,5 @@ public class StorageDrive
     public long FreeSpace { get; set; }
     public long UnavailableSpace { get; set; }
     public long UsedSpace { get; set; }
-    public StorageItmeType EntryType { get; set; } = StorageItmeType.Drive;
+    public StorageItemType EntryType { get; set; } = StorageItemType.Drive;
 }

@@ -8,4 +8,5 @@ public interface IDirectoryBroker
     IEnumerable<string> GetFilesPath(string directoryPath);
     IEnumerable<StorageDirectory> GetDirectories(string directoryPath);
     StorageDirectory GetByPath(string path);
+    bool ExistsAsync(string directoryPath);
 }

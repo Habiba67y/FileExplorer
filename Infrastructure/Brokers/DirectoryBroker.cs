@@ -21,4 +21,5 @@ public class DirectoryBroker : IDirectoryBroker
         => Directory.EnumerateDirectories(directoryPath);
     public IEnumerable<string> GetFilesPath(string directoryPath)
         => Directory.EnumerateFiles(directoryPath);
+    public bool ExistsAsync(string directoryPath) => Directory.Exists(directoryPath);
 }

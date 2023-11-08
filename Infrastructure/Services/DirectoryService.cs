@@ -1,4 +1,5 @@
 ﻿using Application.Brokers;
+using Application.Filters;
 using Application.Models;
 using Application.Services;
 
@@ -13,10 +14,10 @@ public class DirectoryService : IDirectoryService
     }
 
     public ValueTask<StorageDirectory> GetByPath(string path)
-    => new ValueTask<StorageDirectory>(_broker.GetByPath(path));
+    => new (_broker.GetByPath(path));
 
-    public ValueTask<List<StorageDirectory>> GetDirectories(string directoryPath)
-    => new ValueTask<List<StorageDirectory>>(_broker.GetDirectories(directoryPath).ToList());
+    public ValueTask<List<StorageDirectory>> GetDirectories(string directoryPath, FilterPagination pagination)
+    => new(_broker.GetDirectories(directoryPath).Skip((pagination.PageToken - 1) * pagination.PageSize).Take(pagination.PageSize).ToList());
 
     public IEnumerable<string> GetDirectoriesPath(string directoryPath)
     => _broker.GetDirectoriesPath(directoryPath);
